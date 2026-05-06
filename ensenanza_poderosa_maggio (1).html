@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enseñanza Poderosa – Mariana Maggio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --rust: #c0392b;
+    --sage: #4a7c59;
+    --slate: #2c3e50;
+    --light: #faf7f2;
+    --accent: #e8d5b0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    height: 100vh;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  /* ── SLIDE CONTAINER ── */
+  .slides-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity .55s ease, transform .55s ease;
+    pointer-events: none;
+    text-align: center;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ── SLIDE 1 – CARÁTULA ── */
+  .slide-cover {
+    background: radial-gradient(ellipse at 30% 40%, #2c1810 0%, var(--ink) 60%);
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cover-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: .4rem 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 2px;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cover-title span { color: var(--gold); font-style: italic; }
+  .cover-sub {
+    font-size: 1.05rem;
+    color: var(--accent);
+    letter-spacing: .05em;
+    margin-bottom: .5rem;
+  }
+  .cover-author {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+  .cover-line {
+    width: 80px; height: 2px;
+    background: var(--gold);
+    margin: 0 auto 2rem;
+  }
+  .cover-desc {
+    font-size: .9rem;
+    color: rgba(245,240,232,.6);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── SLIDE 2 – INTEGRANTES ── */
+  .slide-team {
+    background: linear-gradient(135deg, #1a2a1a 0%, #1a1a2e 100%);
+  }
+  .team-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  .team-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(201,168,76,.25);
+    border-radius: 12px;
+    padding: 1.5rem 1.2rem;
+    width: 140px;
+    transition: transform .3s, border-color .3s;
+  }
+  .team-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .team-name { font-size: .85rem; font-weight: 500; color: var(--cream); }
+  .team-role { font-size: .72rem; color: var(--gold); margin-top: .25rem; }
+
+  /* ── SLIDE 3 – ÍNDICE ── */
+  .slide-index { background: var(--ink); }
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    text-align: left;
+    max-width: 700px;
+    width: 100%;
+  }
+  .index-item {
+    display: flex; align-items: flex-start; gap: .75rem;
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: .8rem 1rem;
+    font-size: .88rem;
+    color: var(--accent);
+    line-height: 1.4;
+  }
+  .index-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 1.5rem;
+  }
+
+  /* ── SLIDE GENÉRICO ── */
+  .slide-content {
+    background: linear-gradient(160deg, #1e1e38 0%, #12121f 100%);
+    text-align: left;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .section-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .25rem .8rem;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+  .slide-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .slide-heading em { color: var(--gold); font-style: italic; }
+  .body-text {
+    font-size: .95rem;
+    color: rgba(245,240,232,.8);
+    line-height: 1.75;
+    max-width: 680px;
+  }
+  .highlight-box {
+    background: rgba(201,168,76,.12);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.5rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    color: var(--accent);
+    font-size: .92rem;
+    line-height: 1.65;
+  }
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: 1rem;
+  }
+  .pill {
+    background: rgba(201,168,76,.15);
+    border: 1px solid rgba(201,168,76,.4);
+    color: var(--gold);
+    border-radius: 999px;
+    padding: .35rem .9rem;
+    font-size: .82rem;
+    font-weight: 500;
+    transition: background .2s;
+  }
+  .pill:hover { background: rgba(201,168,76,.3); }
+
+  /* ── CARD GRID ── */
+  .cards-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    width: 100%;
+  }
+  .card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+  .card-icon { font-size: 1.6rem; margin-bottom: .5rem; }
+  .card-title { font-weight: 600; font-size: .9rem; color: var(--gold); margin-bottom: .4rem; }
+  .card-body { font-size: .82rem; color: rgba(245,240,232,.7); line-height: 1.6; }
+
+  /* ── RASGOS LIST ── */
+  .rasgos-list { list-style: none; margin-top: 1rem; }
+  .rasgos-list li {
+    display: flex; align-items: flex-start; gap: .8rem;
+    padding: .7rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: .9rem;
+    color: rgba(245,240,232,.85);
+    line-height: 1.5;
+  }
+  .rasgo-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 2rem;
+    line-height: 1;
+  }
+
+  /* ── QUOTE SLIDE ── */
+  .slide-quote {
+    background: linear-gradient(135deg, #1a0a0a 0%, #1a1a2e 100%);
+    text-align: center;
+  }
+  .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    color: var(--cream);
+    max-width: 650px;
+    line-height: 1.7;
+    margin: 1rem auto;
+  }
+  .quote-attr {
+    font-size: .8rem;
+    color: var(--gold);
+    letter-spacing: .1em;
+    margin-top: .8rem;
+  }
+
+  /* ── SLIDE REFLEXION ── */
+  .slide-refl {
+    background: linear-gradient(160deg, #0d2016 0%, #1a1a2e 100%);
+    text-align: left;
+  }
+
+  /* ── CIERRE ── */
+  .slide-close {
+    background: radial-gradient(ellipse at 70% 60%, #1a2c1a 0%, var(--ink) 60%);
+    text-align: center;
+  }
+  .close-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .close-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--gold);
+    font-weight: 900;
+    margin-bottom: .8rem;
+  }
+  .close-sub {
+    font-size: 1rem;
+    color: rgba(245,240,232,.7);
+    max-width: 500px;
+    line-height: 1.7;
+    margin: 0 auto 1.5rem;
+  }
+  .ref-list {
+    font-size: .78rem;
+    color: rgba(245,240,232,.45);
+    line-height: 1.8;
+  }
+
+  /* ── SLIDE TITLE SHARED ── */
+  .slide-page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: .5rem;
+    line-height: 1.2;
+  }
+  .divider {
+    width: 50px; height: 3px;
+    background: var(--gold);
+    margin: .8rem 0 1.2rem;
+    border-radius: 2px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(26,26,46,.85);
+    border: 1px solid rgba(201,168,76,.3);
+    backdrop-filter: blur(12px);
+    padding: .65rem 1.2rem;
+    border-radius: 999px;
+    z-index: 100;
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: .2rem .5rem;
+    border-radius: 6px;
+    transition: background .2s;
+  }
+  .nav-btn:hover { background: rgba(201,168,76,.15); }
+  .nav-btn:disabled { color: rgba(201,168,76,.3); cursor: not-allowed; }
+  .slide-counter {
+    font-size: .8rem;
+    color: var(--accent);
+    min-width: 5rem;
+    text-align: center;
+    letter-spacing: .08em;
+  }
+  .dots {
+    display: flex; gap: .35rem;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(201,168,76,.3);
+    cursor: pointer;
+    transition: background .25s, transform .25s;
+  }
+  .dot.on { background: var(--gold); transform: scale(1.4); }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--gold);
+    transition: width .4s ease;
+    z-index: 200;
+  }
+
+  /* ── SECTION HEADER BADGE ── */
+  .section-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .5rem;
+  }
+
+  /* ── responsive tweaks ── */
+  @media (max-width: 600px) {
+    .slide { padding: 2rem 1.5rem; }
+    .cards-2 { grid-template-columns: 1fr; }
+    .index-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pbar"></div>
+
+<div class="slides-wrapper" id="sw">
+
+  <!-- ===== SLIDE 1 – CARÁTULA ===== -->
+  <div class="slide slide-cover active" data-n="1">
+    <div class="cover-badge">Tecnología Educativa · 2025</div>
+    <h1 class="cover-title"><span>Enseñanza</span><br>Poderosa</h1>
+    <p class="cover-sub">Enriquecer la Enseñanza – Ambientes con alta disposición tecnológica</p>
+    <p class="cover-author">Mariana Maggio</p>
+    <div class="cover-line"></div>
+    <p class="cover-desc">Análisis colaborativo de los capítulos 2, selección del capítulo 4 y Palabras Finales — un recorrido por los rasgos que distinguen las prácticas de enseñanza que transforman.</p>
+  </div>
+
+  <!-- ===== SLIDE 2 – INTEGRANTES ===== -->
+  <div class="slide slide-team" data-n="2">
+    <div class="section-label">Nuestro Equipo</div>
+    <p class="slide-page-title">Integrantes del Grupo</p>
+    <div class="divider"></div>
+    <p class="body-text" style="text-align:center; margin-bottom:1rem;">Trabajo colaborativo — Tecnología Educativa 2025</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar" style="background:#c9a84c;">B</div>
+        <div class="team-name">Becerra, Lourdes</div>
+        <div class="team-role">Integrante</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar" style="background:#4a7c59;">C</div>
+        <div class="team-name">Cruz, Flavia</div>
+        <div class="team-role">Integrante</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar" style="background:#c0392b;">F</div>
+        <div class="team-name">Funes, Leonel</div>
+        <div class="team-role">Integrante</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar" style="background:#2c3e50;">L</div>
+        <div class="team-name">López, Nabila</div>
+        <div class="team-role">Integrante</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3 – ÍNDICE ===== -->
+  <div class="slide slide-index" data-n="3">
+    <div class="section-label">Estructura del Trabajo</div>
+    <p class="slide-page-title">Contenidos que abordaremos</p>
+    <div class="divider" style="margin: .8rem auto 1.2rem;"></div>
+    <div class="index-grid">
+      <div class="index-item"><span class="index-num">01</span>¿Qué es la Enseñanza Poderosa?</div>
+      <div class="index-item"><span class="index-num">02</span>Relatos fundantes de Maggio</div>
+      <div class="index-item"><span class="index-num">03</span>Los 6 rasgos distintivos</div>
+      <div class="index-item"><span class="index-num">04</span>Abordaje teórico actual</div>
+      <div class="index-item"><span class="index-num">05</span>La vida es un juego</div>
+      <div class="index-item"><span class="index-num">06</span>Lo que las redes sociales crean</div>
+      <div class="index-item"><span class="index-num">07</span>Palabras Finales: la creación pedagógica</div>
+      <div class="index-item"><span class="index-num">08</span>Reflexión grupal</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4 – QUÉ ES ENSEÑANZA PODEROSA ===== -->
+  <div class="slide slide-content" data-n="4">
+    <span class="section-tag">Capítulo 2</span>
+    <h2 class="slide-heading">¿Qué es la <em>Enseñanza Poderosa</em>?</h2>
+    <div class="divider"></div>
+    <p class="body-text">Para Maggio, la enseñanza poderosa es aquella que <strong style="color:var(--gold)">crea una propuesta original que nos transforma como sujetos</strong> y cuyas huellas permanecen. Va mucho más allá de transmitir información: genera comprensiones profundas, perdurables y movilizadoras.</p>
+    <div class="highlight-box">
+      "La enseñanza poderosa crea una propuesta original que nos transforma como sujetos y cuyas huellas permanecen."
+      <br><span style="font-size:.8rem; color: var(--gold); margin-top:.4rem; display:block;">— Mariana Maggio, Cap. 2</span>
+    </div>
+    <p class="body-text">El término <em>poderoso</em> remite, entre otros significados, al vocablo inglés <em>empowerment</em>: dar fortaleza y confianza; dar a alguien más control sobre su propia situación. Esa potencia aparece en clase, nos transforma y deja huellas imborrables.</p>
+  </div>
+
+  <!-- ===== SLIDE 5 – RELATOS FUNDANTES ===== -->
+  <div class="slide slide-content" data-n="5">
+    <span class="section-tag">Capítulo 2 – Relatos</span>
+    <h2 class="slide-heading">Cinco <em>relatos fundantes</em></h2>
+    <div class="divider"></div>
+    <div class="cards-2">
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">Severi y el impresionismo</div>
+        <div class="card-body">El maestro de Plástica que pintó frente a sus alumnos, generando una experiencia transformadora que Maggio recuerda décadas después.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👁️</div>
+        <div class="card-title">Edith Litwin y "prestar los ojos"</div>
+        <div class="card-body">Las clases de Julio Payró donde se "aprendía a ver": una enseñanza descriptiva pero profundamente interpretativa, con metaanálisis como construcción de conocimiento.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">El artículo sobre Islandia</div>
+        <div class="card-body">Maggio usa un artículo periodístico para debatir el sesgo positivista y la hipótesis causalista, generando vigilancia epistemológica en sus alumnos.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <div class="card-title">El insight de Enrique</div>
+        <div class="card-body">Un docente de Química que en clase experimenta una comprensión súbita (insight): "Tengo que cambiar todo lo que tengo." Un salto epistemológico real.</div>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top:1rem; font-size:.83rem; color: rgba(245,240,232,.55);">+ El relato de Natalia sobre la emoción como registro imborrable del aprendizaje.</p>
+  </div>
+
+  <!-- ===== SLIDE 6 – 6 RASGOS ===== -->
+  <div class="slide slide-content" data-n="6">
+    <span class="section-tag">Capítulo 2 – Síntesis</span>
+    <h2 class="slide-heading">Los <em>6 rasgos</em> de la Enseñanza Poderosa</h2>
+    <div class="divider"></div>
+    <ul class="rasgos-list">
+      <li><span class="rasgo-num">1</span><div><strong style="color:var(--gold)">Da cuenta de un abordaje teórico actual</strong> — Enseña el estado del arte del campo, con debate, controversia y matices.</div></li>
+      <li><span class="rasgo-num">2</span><div><strong style="color:var(--gold)">Permite pensar al modo de la disciplina</strong> — Favorece el pensamiento disciplinar, no solo la acumulación de hechos.</div></li>
+      <li><span class="rasgo-num">3</span><div><strong style="color:var(--gold)">Mira en perspectiva</strong> — Enseña a cambiar puntos de vista, a entender desde múltiples marcos de referencia.</div></li>
+      <li><span class="rasgo-num">4</span><div><strong style="color:var(--gold)">Está formulada en tiempo presente</strong> — Se crea, se inventa, se concibe en el presente de la sociedad, la disciplina y los alumnos.</div></li>
+      <li><span class="rasgo-num">5</span><div><strong style="color:var(--gold)">Ofrece una estructura que en sí es original</strong> — Es una creación del docente; no se repite, no se copia.</div></li>
+      <li><span class="rasgo-num">6</span><div><strong style="color:var(--gold)">Conmueve y perdura</strong> — Genera emoción, deja huella, moviliza. Los maestros que nos transformaron son aquellos que nos conmovieron.</div></li>
+    </ul>
+  </div>
+
+  <!-- ===== SLIDE 7 – ABORDAJE TEÓRICO ===== -->
+  <div class="slide slide-content" data-n="7">
+    <span class="section-tag">Rasgo 1</span>
+    <h2 class="slide-heading">Da cuenta de un <em>abordaje teórico actual</em></h2>
+    <div class="divider"></div>
+    <p class="body-text">Si tuviera que elegir un solo rasgo, Maggio elegiría este: la enseñanza poderosa da cuenta del <strong style="color:var(--gold)">estado del arte</strong>, del modo de entender un tema hoy, con todo lo que ello pueda implicar de debate, controversia y matices.</p>
+    <div class="highlight-box">
+      "La enseñanza poderosa no enseña el pasado del conocimiento y pretende ser buena, porque si hay algo que define sustantivamente el conocimiento es su carácter provisional."
+    </div>
+    <p class="body-text">La tecnología juega un papel central: permite acceder a investigaciones recientes, realizar intercambios con especialistas, conocer reflexiones que otros dan a conocer a diario. Los entornos tecnológicos crean oportunidades de actualización inéditas para el pensamiento disciplinado.</p>
+  </div>
+
+  <!-- ===== SLIDE 8 – PENSAR AL MODO ===== -->
+  <div class="slide slide-content" data-n="8">
+    <span class="section-tag">Rasgo 2</span>
+    <h2 class="slide-heading">Permite pensar <em>al modo de la disciplina</em></h2>
+    <div class="divider"></div>
+    <p class="body-text">Retomando a Gardner (2008), la enseñanza poderosa favorece las condiciones para pensar al modo de una disciplina. Las materias que solo recorren conceptos sin comprender los marcos epistemológicos y metodológicos no favorecen el pensamiento disciplinar, sino que pueden <strong style="color:var(--gold)">obturarlo</strong>.</p>
+    <div class="highlight-box">
+      Bruner pregunta: "¿Es tan extraño proponer que no se enseñe historia sin historiografía, ni literatura sin teoría literaria, ni poesía sin poética?"
+      <br><span style="font-size:.8rem; color: var(--gold); margin-top:.4rem; display:block;">— Jerome Bruner, 1997</span>
+    </div>
+    <div class="pill-list">
+      <span class="pill">Marcos epistemológicos</span>
+      <span class="pill">Construcción del conocimiento</span>
+      <span class="pill">Carácter provisional</span>
+      <span class="pill">Pensamiento disciplinar</span>
+      <span class="pill">Howard Gardner</span>
+      <span class="pill">Jerome Bruner</span>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9 – FORMULADA EN TIEMPO PRESENTE ===== -->
+  <div class="slide slide-content" data-n="9">
+    <span class="section-tag">Rasgos 3 · 4 · 5</span>
+    <h2 class="slide-heading">Perspectiva, <em>tiempo presente</em> y originalidad</h2>
+    <div class="divider"></div>
+    <div class="cards-2">
+      <div class="card">
+        <div class="card-icon">🔭</div>
+        <div class="card-title">Mira en perspectiva</div>
+        <div class="card-body">Enseña a cambiar puntos de vista. Mirar con los ojos del otro amplía la mirada. La enseñanza a través de casos, el metaanálisis y el trabajo colaborativo permiten explorar múltiples perspectivas.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <div class="card-title">Formulada en tiempo presente</div>
+        <div class="card-body">Se piensa en el presente: de la sociedad, la disciplina, la institución y de cada alumno. No puede estar "fija". La clase de hoy no puede ser igual a la de mañana.</div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:1rem;">
+      <strong style="color:var(--gold)">Originalidad didáctica:</strong> Ser original significa que la propuesta resulta de la inventiva del autor. La construcción propia, que nos encarna, es aquella por la que podemos jugar, que defendemos en el buen sentido y que podemos sostener frente a los alumnos.
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 10 – CONMUEVE Y PERDURA ===== -->
+  <div class="slide slide-quote" data-n="10">
+    <span class="section-tag" style="margin-bottom:1.5rem;">Rasgo 6</span>
+    <div style="font-size:2.5rem; margin-bottom:1rem;">✨</div>
+    <p class="slide-page-title" style="text-align:center; font-family:'Playfair Display',serif; font-size: clamp(1.5rem, 4vw, 2.5rem);">Conmueve <em style="color:var(--gold)">y Perdura</em></p>
+    <div class="divider" style="margin: .8rem auto 1.5rem;"></div>
+    <p class="big-quote">"Cuando la enseñanza es actual y originalmente concebida, ayuda a pensar y a ver en perspectiva, y deja marcas que perduran. Los maestros que nos transformaron aparecen a través de reconstrucciones que miran hacia atrás."</p>
+    <p class="quote-attr">— Philip Jackson, citado por Maggio</p>
+    <p class="body-text" style="text-align:center; max-width:560px; margin: 1.5rem auto 0; font-size:.88rem; color:rgba(245,240,232,.65);">La emoción en el aula no es accidental: es señal de que el docente está involucrado. Apasionarse y emocionarse refleja que la enseñanza importa, y eso se transmite. La memoria de los alumnos reconstruye aquellas prácticas que los conmovieron.</p>
+  </div>
+
+  <!-- ===== SLIDE 11 – LA VIDA ES JUEGO ===== -->
+  <div class="slide slide-content" data-n="11">
+    <span class="section-tag">Capítulo 4 – Los "Nuevos" Entornos</span>
+    <h2 class="slide-heading">La vida es <em>un juego</em></h2>
+    <div class="divider"></div>
+    <p class="body-text">Los videojuegos son uno de los objetos más ponderados en el análisis de la tecnología en relación con niños y jóvenes. Pueden ser un <strong style="color:var(--gold)">puente hacia la buena enseñanza</strong> cuando crean contextos atractivos con aire de realidad y relatos potentes.</p>
+    <div class="cards-2" style="margin-top:1rem;">
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Potencial pedagógico</div>
+        <div class="card-body">Diseño de estrategias, resolución de problemas, causalidades múltiples, actores con lógicas diferentes, aprendizaje por error. Los jugadores se convierten en constructores de conocimiento.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚠️</div>
+        <div class="card-title">El desafío docente</div>
+        <div class="card-body">No alcanza con adoptar juegos existentes. Hay que estudiarlos, entender qué procesos cognitivos promueven y crear marcos de enseñanza que generen esa potencia cognitiva.</div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:1rem;">
+      "Jugar para enseñar podría ser la metáfora que lo resume y carga de significado. Cuando juego vuelvo a pensar en términos culturalmente próximos a aquellos a quienes educo." — Maggio
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 12 – REDES SOCIALES ===== -->
+  <div class="slide slide-content" data-n="12">
+    <span class="section-tag">Capítulo 4 – Los "Nuevos" Entornos</span>
+    <h2 class="slide-heading">Lo que las <em>redes sociales crean</em></h2>
+    <div class="divider"></div>
+    <p class="body-text">Las redes sociales marcan nuestra época como fenómeno social y cultural. Su fuerza consiste en crear formas en las que interactuamos y nos constituimos en marco para las actividades más diversas, desde el entretenimiento hasta la educación.</p>
+    <div class="cards-2" style="margin-top:1rem;">
+      <div class="card">
+        <div class="card-icon">👍</div>
+        <div class="card-title">El "Me gusta" como herramienta</div>
+        <div class="card-body">Convertir los "Me gusta" en una poderosa herramienta de análisis colectivo puede ser uno de los desafíos más interesantes: hacer explícitos los procesos de construcción de conocimiento.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <div class="card-title">El comentario como cultura</div>
+        <div class="card-body">Reconocer el placer de comentar y las posibilidades de los nuevos entornos puede crear una cultura del intercambio reflexivo y productivo, clave de la enseñanza actual.</div>
+      </div>
+    </div>
+    <div class="pill-list">
+      <span class="pill">Facebook</span>
+      <span class="pill">Twitter / X</span>
+      <span class="pill">Wikis colaborativas</span>
+      <span class="pill">Comentarios</span>
+      <span class="pill">Construcción colectiva</span>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 13 – PALABRAS FINALES ===== -->
+  <div class="slide slide-refl" data-n="13">
+    <span class="section-tag">Palabras Finales</span>
+    <h2 class="slide-heading">La <em>creación pedagógica</em> como centro</h2>
+    <div class="divider"></div>
+    <p class="body-text">Maggio cierra el libro proponiendo que el centro del marco es la <strong style="color:var(--gold)">creación pedagógica</strong>, sustentada en tres pilares críticos:</p>
+    <ul class="rasgos-list" style="margin-top:.8rem;">
+      <li><span class="rasgo-num">I</span><div><strong style="color:var(--gold)">Especialización del docente</strong> — Maximizar el aprovechamiento de entornos tecnológicos en la especialización. El docente deviene experto y usuario avanzado que puede recurrir a la tecnología naturalmente al enseñar.</div></li>
+      <li><span class="rasgo-num">II</span><div><strong style="color:var(--gold)">Búsqueda creativa</strong> — Tanto curricular como didáctica. No es posible crear con un currículo como corsé. La propuesta de enseñanza debe ir más allá de la rutina y la repetición.</div></li>
+      <li><span class="rasgo-num">III</span><div><strong style="color:var(--gold)">Imaginar los entornos tecnológicos</strong> — Los docentes pueden concebir entornos de nuevo tipo, más o menos sofisticados, que sean genuinamente necesarios para sus propuestas.</div></li>
+    </ul>
+    <p class="body-text" style="margin-top:1rem; font-size:.85rem; color:rgba(245,240,232,.55);">La hipótesis epistemológica central: las TIC están entramadas con los modos en que conocemos, creamos, participamos y aprendemos. Por eso, no es posible concebir propuestas de enseñanza que no las integren.</p>
+  </div>
+
+  <!-- ===== SLIDE 14 – REFLEXIÓN GRUPAL Y CIERRE ===== -->
+  <div class="slide slide-close" data-n="14">
+    <div class="close-icon">🌱</div>
+    <p class="close-title">¿Qué nos dejó este material?</p>
+    <div class="cover-line"></div>
+    <p class="close-sub">Reemplazá este texto con la reflexión auténtica del grupo: ¿qué les pareció más valioso, qué los interpeló, con qué no acuerdan, qué conectó con su propia experiencia como estudiantes y futuros docentes?</p>
+    <div class="ref-list">
+      Maggio, M. (2012). <em>Enriquecer la Enseñanza.</em> Paidós Voces de la Educación.<br>
+      Bruner, J. (1997). <em>La educación, puerta de la cultura.</em> Visor.<br>
+      Jackson, P. (2002). <em>Práctica de la enseñanza.</em> Amorrortu.<br>
+      Gardner, H. (2008). <em>Las cinco mentes del futuro.</em> Paidós.<br>
+      Perkins, D. (1995). <em>La escuela inteligente.</em> Gedisa.
+    </div>
+  </div>
+
+</div><!-- /slides-wrapper -->
+
+<!-- NAVIGATION -->
+<nav>
+  <button class="nav-btn" id="prev" onclick="go(-1)">&#8592;</button>
+  <span class="slide-counter" id="ctr">1 / 14</span>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="next" onclick="go(1)">&#8594;</button>
+</nav>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    setTimeout(() => slides[cur].classList.remove('exit'), 550);
+    cur = Math.max(0, Math.min(n, total - 1));
+    slides[cur].classList.add('active');
+    update();
+  }
+
+  function go(dir) { goTo(cur + dir); }
+
+  function update() {
+    document.getElementById('ctr').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === total - 1;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+    document.getElementById('pbar').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+  });
+
+  update();
+</script>
+</body>
+</html>
